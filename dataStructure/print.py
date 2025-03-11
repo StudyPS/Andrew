@@ -19,15 +19,34 @@
 '''
 
 import sys
+from collections import deque
 
 
 testcount = int(sys.stdin.readline().strip()) #테스트케이스 수수
 
-arrange = []
-for i in testcount:
+
+for i in range(testcount):
     N, M = map(int, sys.stdin.readline().split()) #N - 문서수 M은 우선순위
     
-    prior = list(map(int, sys.stdin.readline().split())) # 우선 순위 받기
+    prior = deque(map(int, sys.stdin.readline().split())) # 우선 순위 받기 중요도
+
+    index = deque(range(N))
+
+    order = 0 #순서
+
+    while prior:
+        if prior[0] == max(prior):
+            order += 1
+            if index[0] == M:
+                print(order)
+                break
+            else:
+                prior.popleft()
+                index.popleft()
+
+        else:
+            prior.append(prior.popleft())
+            index.append(index.popleft())
 
     
 
